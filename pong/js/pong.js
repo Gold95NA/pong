@@ -9,17 +9,20 @@ var timer = setInterval(main, 1000/60)
 var fy = .97
 
 //p1 setup
-var p1 = new Box();
-p1.w = 20
-p1.h = 150
-p1.x = 0 + p1.w/2
+var player = [];
 
-var p2 = new Box();
-p2.w = 20
-p2.h = 150
-p2.x = c.width - p2.w/2
-p2.color = 'green'  
-p2.force = 1    
+player[0] = new Player('Player 1', 0, 0, new Box());
+player[1] = new Player('Player 2', 0, 0, new Box());
+
+player[0].pad.w = 20;
+player[0].pad.h = 150;
+player[0].pad.x = 0 + player[0].pad.w / 2;
+
+player[1].pad.w = 20;
+player[1].pad.h = 150;
+player[1].pad.x = c.width - player[1].pad.w / 2;
+player[1].pad.color = 'green';  
+player[1].pad.force = 1;  
 
 //ball setup
 var ball = new Box();
@@ -29,101 +32,86 @@ ball.vx = -2
 ball.vy = -2
 ball.color = `black`
 
-function main()
-{
-    //erases the canvas
-    ctx.clearRect(0,0,c.width,c.height)
-    
-    //p1 accelerates when key is pressed 
-    if(keys[`w`])
-    {
-       p1.vy += -p1.force
+function main() {
+    // erases the canvas
+    ctx.clearRect(0, 0, c.width, c.height);
+
+    // p1 accelerates when key is pressed
+    if (keys[`w`]) {
+        player[0].pad.vy += -player[0].pad.force;
     }
 
-    if(keys[`s`])
-    {
-        p1.vy += p1.force
+    if (keys[`s`]) {
+        player[0].pad.vy += player[0].pad.force;
     }
 
-    if(keys[`ArrowUp`])
-    {
-       p2.vy += -p2.force
+    if (keys[`ArrowUp`]) {
+        player[1].pad.vy += -player[1].pad.force;
     }
 
-    if(keys[`ArrowDown`])
-    {
-        p2.vy += p2.force
+    if (keys[`ArrowDown`]) {
+        player[1].pad.vy += player[1].pad.force;
     }
 
-    //applies friction
-    p1.vy *= fy
-    p2.vy *= fy
+    // applies friction
+    player[0].pad.vy *= fy;
+    player[1].pad.vy *= fy;
 
-    //player movement
-    p1.move();
-    p2.move();
+    // player movement
+    player[0].pad.move();
+    player[1].pad.move();
 
-    //ball movement
-    ball.move()
+    // ball movement
+    ball.move();
 
-    //p1 collision
-    if(p1.y < 0+p1.h/2)
-    {
-        p1.y = 0+p1.h/2
+    // p1 collision
+    if (player[0].pad.y < 0 + player[0].pad.h / 2) {
+        player[0].pad.y = 0 + player[0].pad.h / 2;
     }
-    if(p1.y > c.height-p1.h/2)
-    {
-        p1.y = c.height-p1.h/2
+    if (player[0].pad.y > c.height - player[0].pad.h / 2) {
+        player[0].pad.y = c.height - player[0].pad.h / 2;
     }
 
-    if(p2.y < 0+p2.h/2)
-    {
-        p2.y = 0+p2.h/2
+    if (player[1].pad.y < 0 + player[1].pad.h / 2) {
+        player[1].pad.y = 0 + player[1].pad.h / 2;
     }
-    if(p2.y > c.height-p2.h/2)
-    {
-        p2.y = c.height-p2.h/2
+    if (player[1].pad.y > c.height - player[1].pad.h / 2) {
+        player[1].pad.y = c.height - player[1].pad.h / 2;
     }
 
-    //ball collision 
-    if(ball.x < 0)
-    {
-        ball.x = c.width/2
-        ball.y  =c.height/2
+    // ball collision 
+    if (ball.x < 0) {
+        ball.x = c.width / 2;
+        ball.y = c.height / 2;
     }
-    if(ball.x > c.width)
-    {
-        ball.x = c.width/2
-        ball.y = c.height/2
-    }
-    
-    if(ball.y < 0)
-    {
-        ball.y = 0
-        ball.vy = -ball.vy
-    }
-    if(ball.y > c.height)
-    {
-        ball.y = c.height
-        ball.vy = -ball.vy
-       
+    if (ball.x > c.width) {
+        ball.x = c.width / 2;
+        ball.y = c.height / 2;
     }
 
-    //p1 with ball collision
-    if(ball.collide(p1))
-    {
-        ball.x = p1.x + p1.w/2 + ball.w/2
+    if (ball.y < 0) {
+        ball.y = 0;
+        ball.vy = -ball.vy;
+    }
+    if (ball.y > c.height) {
+        ball.y = c.height;
+        ball.vy = -ball.vy;
+    }
+
+    // p1 with ball collision
+    if (ball.collide(player[0].pad)) {
+        ball.x = player[0].pad.x + player[0].pad.w / 2 + ball.w / 2;
         ball.vx = -ball.vx;
     }
 
-    if(ball.collide(p2))
-    {
-        ball.x = p2.x - p2.w/2 - ball.w/2
+    //P2
+    if (ball.collide(player[1].pad)) {
+        ball.x = player[1].pad.x - player[1].pad.w / 2 - ball.w / 2;
         ball.vx = -ball.vx;
     }
 
-    //draw the objects
-    p1.draw()
-    p2.draw()
-    ball.draw()
+    // draw the objects
+    player[0].pad.draw();
+    player[1].pad.draw();
+    ball.draw();
 }
