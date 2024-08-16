@@ -11,15 +11,11 @@ var fy = .97
 //p1 setup
 var player = [];
 
-// Add new Player() objects to the 0 and 1 indexes
 player[0] = new Player('Player 1', 0, 0, new Box());
 player[1] = new Player('Player 2', 0, 0, new Box());
-
-// Set up the paddles for each player
 player[0].pad.w = 20;
 player[0].pad.h = 150;
 player[0].pad.x = 0 + player[0].pad.w / 2;
-
 player[1].pad.w = 20;
 player[1].pad.h = 150;
 player[1].pad.x = c.width - player[1].pad.w / 2;
@@ -98,8 +94,7 @@ function main()
         ball.x = player[0].pad.x + player[0].pad.w / 2 + ball.w / 2;
         ball.vx = -ball.vx;
     }
-
-    // Player 2 with ball collision
+    // P2
     if (ball.collide(player[1].pad)) {
         ball.x = player[1].pad.x - player[1].pad.w / 2 - ball.w / 2;
         ball.vx = -ball.vx;
