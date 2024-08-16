@@ -64,10 +64,6 @@ function main() {
     pad[0].move();
     pad[1].move();
 
-    //ball movement
-    ball.move();
-
-    //p1 collision
     if (pad[0].y < 0 + pad[0].h / 2) {
         pad[0].y = 0 + pad[0].h / 2;
     }
@@ -82,14 +78,21 @@ function main() {
         pad[1].y = c.height - pad[1].h / 2;
     }
 
-    //ball collision 
+    //ball movement
+    ball.move();
+
     if (ball.x < 0) {
+        player[1].score++;
         ball.x = c.width / 2;
         ball.y = c.height / 2;
+        ball.vx = -ball.vx;
     }
+
     if (ball.x > c.width) {
+        player[0].score++;
         ball.x = c.width / 2;
         ball.y = c.height / 2;
+        ball.vx = -ball.vx;
     }
 
     if (ball.y < 0) {
@@ -101,17 +104,17 @@ function main() {
         ball.vy = -ball.vy;
     }
 
-    //p1 with ball collision
     if (ball.collide(pad[0])) {
         ball.x = pad[0].x + pad[0].w / 2 + ball.w / 2;
         ball.vx = -ball.vx;
     }
 
-    //p2 
     if (ball.collide(pad[1])) {
         ball.x = pad[1].x - pad[1].w / 2 - ball.w / 2;
         ball.vx = -ball.vx;
     }
+
+    console.log(`${player[0].score} | ${player[1].score}`);
 
     //draw the objects
     pad[0].draw();
