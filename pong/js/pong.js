@@ -32,54 +32,57 @@ ball.vx = -2
 ball.vy = -2
 ball.color = `black`
 
+var pad = [];
+
+pad[0] = player[0].pad;
+pad[1] = player[1].pad;
+
 function main() {
-    // erases the canvas
+    //erases the canvas
     ctx.clearRect(0, 0, c.width, c.height);
 
-    // p1 accelerates when key is pressed
+    //player movement
     if (keys[`w`]) {
-        player[0].pad.vy += -player[0].pad.force;
+        pad[0].vy += -pad[0].force;
     }
-
     if (keys[`s`]) {
-        player[0].pad.vy += player[0].pad.force;
+        pad[0].vy += pad[0].force;
     }
 
     if (keys[`ArrowUp`]) {
-        player[1].pad.vy += -player[1].pad.force;
+        pad[1].vy += -pad[1].force;
     }
-
     if (keys[`ArrowDown`]) {
-        player[1].pad.vy += player[1].pad.force;
+        pad[1].vy += pad[1].force;
     }
 
-    // applies friction
-    player[0].pad.vy *= fy;
-    player[1].pad.vy *= fy;
+    //apply friction
+    pad[0].vy *= fy;
+    pad[1].vy *= fy;
 
-    // player movement
-    player[0].pad.move();
-    player[1].pad.move();
+    //move players
+    pad[0].move();
+    pad[1].move();
 
-    // ball movement
+    //ball movement
     ball.move();
 
-    // p1 collision
-    if (player[0].pad.y < 0 + player[0].pad.h / 2) {
-        player[0].pad.y = 0 + player[0].pad.h / 2;
+    //p1 collision
+    if (pad[0].y < 0 + pad[0].h / 2) {
+        pad[0].y = 0 + pad[0].h / 2;
     }
-    if (player[0].pad.y > c.height - player[0].pad.h / 2) {
-        player[0].pad.y = c.height - player[0].pad.h / 2;
-    }
-
-    if (player[1].pad.y < 0 + player[1].pad.h / 2) {
-        player[1].pad.y = 0 + player[1].pad.h / 2;
-    }
-    if (player[1].pad.y > c.height - player[1].pad.h / 2) {
-        player[1].pad.y = c.height - player[1].pad.h / 2;
+    if (pad[0].y > c.height - pad[0].h / 2) {
+        pad[0].y = c.height - pad[0].h / 2;
     }
 
-    // ball collision 
+    if (pad[1].y < 0 + pad[1].h / 2) {
+        pad[1].y = 0 + pad[1].h / 2;
+    }
+    if (pad[1].y > c.height - pad[1].h / 2) {
+        pad[1].y = c.height - pad[1].h / 2;
+    }
+
+    //ball collision 
     if (ball.x < 0) {
         ball.x = c.width / 2;
         ball.y = c.height / 2;
@@ -98,20 +101,20 @@ function main() {
         ball.vy = -ball.vy;
     }
 
-    // p1 with ball collision
-    if (ball.collide(player[0].pad)) {
-        ball.x = player[0].pad.x + player[0].pad.w / 2 + ball.w / 2;
+    //p1 with ball collision
+    if (ball.collide(pad[0])) {
+        ball.x = pad[0].x + pad[0].w / 2 + ball.w / 2;
         ball.vx = -ball.vx;
     }
 
-    //P2
-    if (ball.collide(player[1].pad)) {
-        ball.x = player[1].pad.x - player[1].pad.w / 2 - ball.w / 2;
+    //p2 
+    if (ball.collide(pad[1])) {
+        ball.x = pad[1].x - pad[1].w / 2 - ball.w / 2;
         ball.vx = -ball.vx;
     }
 
-    // draw the objects
-    player[0].pad.draw();
-    player[1].pad.draw();
+    //draw the objects
+    pad[0].draw();
+    pad[1].draw();
     ball.draw();
 }
