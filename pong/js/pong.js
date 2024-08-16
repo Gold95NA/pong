@@ -39,53 +39,40 @@ pad[1] = player[1].pad;
 
 var playerScores = document.querySelectorAll('.score');
 
-function main() {
+function main() 
+{
     //erases the canvas
     ctx.clearRect(0, 0, c.width, c.height);
 
     //player movement
-    if (keys[`w`]) 
-    {
-        pad[0].vy += -pad[0].force;
-    }
-    if (keys[`s`]) 
-    {
-        pad[0].vy += pad[0].force;
-    }
+    const keysMap = [{ up: 'w', down: 's' }, { up: 'ArrowUp', down: 'ArrowDown' }];
 
-    if (keys[`ArrowUp`]) 
+    for (let i = 0; i < pad.length; i++) 
     {
-        pad[1].vy += -pad[1].force;
-    }
-    if (keys[`ArrowDown`]) 
-    {
-        pad[1].vy += pad[1].force;
-    }
+        if (keys[keysMap[i].up]) 
+        {
+            pad[i].vy += -pad[i].force;
+        }
+        if (keys[keysMap[i].down]) 
+        {
+            pad[i].vy += pad[i].force;
+        }
 
-    //apply friction
-    pad[0].vy *= fy;
-    pad[1].vy *= fy;
+        //apply friction
+        pad[i].vy *= fy;
 
-    //move players
-    pad[0].move();
-    pad[1].move();
+        //move players
+        pad[i].move();
 
-    if (pad[0].y < 0 + pad[0].h / 2) 
-    {
-        pad[0].y = 0 + pad[0].h / 2;
-    }
-    if (pad[0].y > c.height - pad[0].h / 2) 
-    {
-        pad[0].y = c.height - pad[0].h / 2;
-    }
-
-    if (pad[1].y < 0 + pad[1].h / 2) 
-    {
-        pad[1].y = 0 + pad[1].h / 2;
-    }
-    if (pad[1].y > c.height - pad[1].h / 2) 
-    {
-        pad[1].y = c.height - pad[1].h / 2;
+        
+        if (pad[i].y < 0 + pad[i].h / 2) 
+        {
+            pad[i].y = 0 + pad[i].h / 2;
+        }
+        if (pad[i].y > c.height - pad[i].h / 2) 
+        {
+            pad[i].y = c.height - pad[i].h / 2;
+        }
     }
 
     //ball movement
@@ -118,27 +105,33 @@ function main() {
         ball.vy = -ball.vy;
     }
 
-    if (ball.collide(pad[0])) 
+    for (let i = 0; i < pad.length; i++) 
     {
-        ball.x = pad[0].x + pad[0].w / 2 + ball.w / 2;
-        ball.vx = -ball.vx;
-    }
+        if (ball.collide(pad[i])) 
+        {
+            if (i === 0) 
+            {
+                ball.x = pad[i].x + pad[i].w / 2 + ball.w / 2;
+            } 
+            else 
+            {
+                ball.x = pad[i].x - pad[i].w / 2 - ball.w / 2;
+            }
 
-    if (ball.collide(pad[1])) 
-    {
-        ball.x = pad[1].x - pad[1].w / 2 - ball.w / 2;
-        ball.vx = -ball.vx;
+            ball.vx = -ball.vx;
+        }
+
+        
+        pad[i].draw();
     }
 
     console.log(`${player[0].score} | ${player[1].score}`);
-
-    //draw the objects
-    pad[0].draw();
-    pad[1].draw();
-    ball.draw();
-
+ 
     for (let i = 0; i < playerScores.length; i++) 
     {
         playerScores[i].innerText = player[i].score;
     }
+
+    //draw the ball
+    ball.draw();
 }
