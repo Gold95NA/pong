@@ -120,7 +120,7 @@ states[`game`] = function()
         {
             ball.x = c.width/2;
             player[i].score++;
-            scoreBoard[i].innerHTML = player[i].score;
+            updateScoreBoard();
         }
 
         if(ball.collide(pad[i]))
@@ -155,6 +155,13 @@ states[`game`] = function()
     pad.forEach(function(i){
         i.debug()
     })
+
+    function updateScoreBoard() 
+{
+    scoreBoard.forEach((element, index) => {
+        element.innerHTML = `${player[index].username}: ${player[index].score}`;
+    });
+}
 
 }
 

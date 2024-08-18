@@ -110,9 +110,10 @@ states[`game`] = function()
         }
         //applies friction
         pad[i].vy *= player[i].fy;
-
+        //player movement
         pad[i].move();
 
+        //pad[0] collision
         if (pad[i].y < pad[i].h / 2) 
         {
             pad[i].y = pad[i].h / 2;
@@ -166,7 +167,7 @@ states[`game`] = function()
         }
     }
 
-    //draw the objects
+    //draw the objects (Uses the array forEach function where i is the object stored in the o Array)
     o.forEach(function(i) 
     {
         i.draw();
