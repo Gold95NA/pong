@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+#score{
+    display:flex;
+    justify-content: space-between;
+    height:50px;
+}
+#score div{
+    position:relative;
+}
+#score div p{
+    position:absolute;
+}
+#score div:last-child p{
+    text-align: right;
+    right:0px;
+}
+canvas{
+    border:1px solid rgb(255,255,255);
+}
+#options{
+    margin-left:24px;
+}
+.sides{
+
+}
+.hidden{
+    height:0;
+    overflow-y:hidden;
+}
+.op{
+    width: 400px;
+    color:#ffffff;
+    display:grid;
+    grid-template-columns: auto auto auto; 
+}

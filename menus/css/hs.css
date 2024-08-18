@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.high-scores{
+    width:760px;
+}
+.row{
+    display:flex;
+    justify-content: space-between;
+    width:200px;
+}
+#menus h2{
+    text-align: center;
+}
+
