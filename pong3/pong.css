@@ -38,6 +38,7 @@ canvas{
 }
 
 .hidden{
+    display: none;
     height:0;
     overflow-y:hidden;
 }

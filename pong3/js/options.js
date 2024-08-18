@@ -3,7 +3,12 @@
     . on click
     . show or hide the `.sides` div
 ---------*/
-
+const optionsHeading = document.querySelector('#options h2');
+const sidesDiv = document.querySelector('.sides');
+optionsHeading.addEventListener('click', function() 
+{
+    sidesDiv.classList.toggle('hidden');
+});
 /*---------
     Program the two fill inputs to do the following:
     . Display the correct colors on the inputs and outputs and paddles    
