@@ -6,15 +6,17 @@ var o = [];
 var pad = [];
 var g = [];
 var goals = [];
-var sides = {
+var sides = 
+{
         top: c.height/2 + (c.height/2 * -1), 
         right: c.width/2 + (c.width/2 * 1), 
         bottom: c.height/2 + (c.height/2 * 1), 
         left: c.width/2 + (c.width/2 * -1)
-    };
+};
 var timer, ball, currentState;
 var scoreBoard;
-var player = [
+var player = 
+[
     new User().setProps({h:150,  force:1, fill:`#ffff00`}),
     new User().setProps({h:150,  force:1, fill:`#ffff00`, keys:{u:`ArrowUp`, d:`ArrowDown`, s:`ArrowLeft`}})
 ]
@@ -55,8 +57,10 @@ function init()
 }
 
 
-states[`pause`] = function(){
-    o.forEach(function (i){
+states[`pause`] = function()
+{
+    o.forEach(function (i)
+    {
         i.draw()
     })
     if(keys[`Escape`])
@@ -72,87 +76,105 @@ states[`game`] = function()
     //ball movement
     ball.move();
 
-    if(ball.y < sides.top + ball.h/2)
+    if (ball.y < sides.top + ball.h / 2) 
     {
-        ball.y = sides.top + ball.h/2;
+        ball.y = sides.top + ball.h / 2;
         ball.vy = -ball.vy;
     }
-    if(ball.y > sides.bottom - ball.h/2)
+    if (ball.y > sides.bottom - ball.h / 2) 
     {
-        ball.y = sides.bottom - ball.h/2;
+        ball.y = sides.bottom - ball.h / 2;
         ball.vy = -ball.vy;
     }
 
-    for(let i=0; i<pad.length; i++)
+    for (let i = 0; i < pad.length; i++) 
     {
-        if(keys[player[i].keys.u])
+        
+        if (keys[player[i].keys.u]) 
         {
             pad[i].vy += -player[i].force;
         }
 
-        if(keys[player[i].keys.d])
+        if (keys[player[i].keys.d]) 
         {
             pad[i].vy += player[i].force;
         }
 
-        
+        if (keys[player[i].keys.s]) 
+        {
+            pad[i].vx = player[i].force * pad[i].dir;  
+        } 
+        else 
+        {
+            pad[i].vx = 0; 
+        }
         //applies friction
         pad[i].vy *= player[i].fy;
-        //player movement
+
         pad[i].move();
 
-        //pad[0] collision
-        if(pad[i].y < pad[i].h/2)
+        if (pad[i].y < pad[i].h / 2) 
         {
-            pad[i].y = pad[i].h/2;
-            pad[i].vy =0;
+            pad[i].y = pad[i].h / 2;
+            pad[i].vy = 0;
         }
-        if(pad[i].y > c.height-pad[i].h/2)
+        if (pad[i].y > c.height - pad[i].h / 2) 
         {
-            pad[i].y = c.height-pad[i].h/2;
-            pad[i].vy =0;
+            pad[i].y = c.height - pad[i].h / 2;
+            pad[i].vy = 0;
         }
-        
-        if(ball.collide(goals[i]))
+
+        if (pad[i].x < pad[i].w / 2) 
         {
-            ball.x = c.width/2;
+            pad[i].x = pad[i].w / 2;
+            pad[i].vx = 0;
+        }
+        if (pad[i].x > c.width - pad[i].w / 2) 
+        {
+            pad[i].x = c.width - pad[i].w / 2;
+            pad[i].vx = 0;
+        }
+
+        if (ball.collide(goals[i])) 
+        {
+            ball.x = c.width / 2;
             player[i].score++;
             scoreBoard[i].innerHTML = player[i].score;
         }
 
-        if(ball.collide(pad[i]))
+        if (ball.collide(pad[i])) 
         {
-            ball.x = pad[i].x + pad[i].dir * (pad[i].w/2 + ball.w/2);
+            ball.x = pad[i].x + pad[i].dir * (pad[i].w / 2 + ball.w / 2);
             ball.vx = pad[i].dir * player[i].power;
-            
-            if(keys[player[i].keys.s])
+
+            if (keys[player[i].keys.s]) 
             {
                 ball.vy = 0;
-                ball.vx = player[i].power * pad[i].dir
-            }
-            else
+                ball.vx = player[i].power * pad[i].dir;
+            } 
+            else 
             {
-                if(ball.y < pad[i].y - pad[i].h/6)
+                if (ball.y < pad[i].y - pad[i].h / 6) 
                 {
                     ball.vy = -player[i].power;
                 }
-                if(ball.y > pad[i].y + pad[i].h/6)
+                if (ball.y > pad[i].y + pad[i].h / 6) 
                 {
                     ball.vy = player[i].power;
                 }
             }
         }
-       
     }
-    
-    //draw the objects (Uses the array forEach function where i is the object stored in the o Array)
-    o.forEach(function (i){
-        i.draw()
-    })
-    pad.forEach(function(i){
-        i.debug()
-    })
 
+    //draw the objects
+    o.forEach(function(i) 
+    {
+        i.draw();
+    });
+    pad.forEach(function(i) 
+    {
+        i.debug();
+    });
 }
 
 
