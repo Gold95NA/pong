@@ -25,6 +25,29 @@ fillInputs.forEach((input, index) =>
         main();
     });
 });
+
+const upInputs = document.querySelectorAll('.u');
+
+upInputs.forEach((input, index) => 
+{
+    input.value = player[index].keys.u;
+    const outputDiv = input.nextElementSibling;
+    outputDiv.innerHTML = player[index].keys.u;
+    input.addEventListener('keydown', function(e) 
+    {
+        e.preventDefault(); 
+        const keyPressed = e.key;
+        input.value = keyPressed;
+        player[index].keys.u = keyPressed;
+        outputDiv.innerHTML = keyPressed;
+    });
+
+    input.addEventListener('focus', function() 
+    {
+        currentState = 'pause';
+        console.log("Game paused. Press Escape to unpause.");
+    });
+});
 /*---------
     Program the two fill inputs to do the following:
     . Display the correct colors on the inputs and outputs and paddles    
