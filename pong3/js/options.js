@@ -99,6 +99,34 @@ addControlInputListeners('.u', 'u');
 addControlInputListeners('.d', 'd');       
 addControlInputListeners('.s', 's');       
 
+const usernameInputs = document.querySelectorAll('.username-input');
+const usernameOutputs = [
+    document.getElementById('player1-username-output'),
+    document.getElementById('player2-username-output')
+];
+
+usernameOutputs.forEach((output, index) => 
+{
+    output.innerHTML = usernameInputs[index].value;
+    player[index].username = usernameInputs[index].value; 
+});
+
+usernameInputs.forEach((input, index) => 
+{
+    input.addEventListener('input', function(e) 
+    {
+        const newUsername = e.target.value;
+        player[index].username = newUsername;
+        usernameOutputs[index].innerHTML = newUsername;
+        updateScoreBoard();
+    });
+
+    input.addEventListener('focus', function() 
+    {
+        currentState = 'pause';
+        console.log("Game paused. Press Escape to unpause.");
+    });
+});
 
 
 

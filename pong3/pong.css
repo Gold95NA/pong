@@ -49,3 +49,10 @@ canvas{
     grid-template-columns: auto auto auto;
     
 }
+
+.username-input {
+    width: 200px; 
+    padding: 5px; 
+    box-sizing: border-box; 
+    font-size: 16px; 
+}
