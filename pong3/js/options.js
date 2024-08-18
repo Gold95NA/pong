@@ -9,6 +9,22 @@ optionsHeading.addEventListener('click', function()
 {
     sidesDiv.classList.toggle('hidden');
 });
+
+const fillInputs = document.querySelectorAll('.fill');
+fillInputs.forEach((input, index) => 
+{
+    input.value = player[index].fill;
+    const outputDiv = input.nextElementSibling;
+    outputDiv.innerHTML = player[index].fill;
+    input.addEventListener('input', function(e)
+    {
+        player[index].fill = e.target.value;
+        player[index].pad.setProps({ fill: player[index].fill
+    });
+        outputDiv.innerHTML = player[index].fill;
+        main();
+    });
+});
 /*---------
     Program the two fill inputs to do the following:
     . Display the correct colors on the inputs and outputs and paddles    
