@@ -38,7 +38,9 @@
     </main>
     <script src="js/User.js"></script>
     <script>
-
+        let params = (new URL(document.location)).searchParams;
+        let loadParam = params.get("load");
+        alert(loadParam);
     </script>
 </body>
 </html>
