@@ -40,56 +40,64 @@
         startMenu.setAttribute(`id`, `start-options`);
         startMenu.style.opacity = `0`;
 
-        const newGameButton = document.createElement(`button`);
-        newGameButton.appendChild(document.createTextNode(`New Game`));
-        newGameButton.setAttribute(`data-load`, `false`);
-
-        const continueButton = document.createElement(`button`);
-        continueButton.appendChild(document.createTextNode(`Continue`));
-        continueButton.setAttribute(`data-load`, `true`);
-
-        const highScoresButton = document.createElement(`button`);
-        highScoresButton.appendChild(document.createTextNode(`High Scores`));
-
-        startMenu.appendChild(newGameButton);
-        startMenu.appendChild(continueButton);
-        startMenu.appendChild(highScoresButton);
+        const startButton = document.createElement(`button`);
+        startButton.appendChild(document.createTextNode(`Start`));
+        startMenu.appendChild(startButton);
 
         var timer = setTimeout(loadStartMenu, 1000);
         function loadStartMenu() 
         {
             $(`#load`).animate({ opacity: 0 }, 2000, function() 
             {
-        menus.removeChild(loadDiv);
-        menus.appendChild(startMenu);
-        $(`#start-options`).animate({ opacity: 1 }, 2000);
+                menus.removeChild(loadDiv);
+                menus.appendChild(startMenu);
+                $(`#start-options`).animate({ opacity: 1 }, 2000);
             });
         }
 
-        newGameButton.addEventListener(`click`, (e) => 
+        startButton.addEventListener(`click`, function(e) 
         {
             $(`#start-options`).animate({ opacity: 0 }, 1000, function() 
             {
                 menus.removeChild(startMenu);
-                window.location.href = `lobby.html?load=false`;
-            });
-        });
+        
+                const newMenu = document.createElement(`div`);
+                newMenu.setAttribute(`id`, `new-menu`);
+                newMenu.style.opacity = `0`;
 
-        continueButton.addEventListener(`click`, (e) => 
-        {
-            $(`#start-options`).animate({ opacity: 0 }, 1000, function() 
-            {
-                menus.removeChild(startMenu);
-                window.location.href = `lobby.html?load=true`;
-            });
-        });
+                const newGameButton = document.createElement(`button`);
+                newGameButton.appendChild(document.createTextNode(`New Game`));
+                newGameButton.setAttribute(`data-load`, `false`);
 
-        highScoresButton.addEventListener(`click`, (e) => 
-        {
-            $(`#start-options`).animate({ opacity: 0 }, 1000, function() 
-            {
-                menus.removeChild(startMenu);
-                window.location.href = `hs.html`;
+                const continueButton = document.createElement(`button`);
+                continueButton.appendChild(document.createTextNode(`Continue`));
+                continueButton.setAttribute(`data-load`, `true`);
+
+                const highScoresButton = document.createElement(`button`);
+                highScoresButton.appendChild(document.createTextNode(`High Scores`));
+
+                newMenu.appendChild(newGameButton);
+                newMenu.appendChild(continueButton);
+                newMenu.appendChild(highScoresButton);
+
+                menus.appendChild(newMenu);
+
+                $(`#new-menu`).animate({ opacity: 1 }, 2000);
+
+                newGameButton.addEventListener(`click`, function() 
+                {
+                    window.location.href = `lobby.html?load=false`;
+                });
+
+                continueButton.addEventListener(`click`, function() 
+                {
+                    window.location.href = `lobby.html?load=true`;
+                });
+
+                highScoresButton.addEventListener(`click`, function() 
+                {
+                    window.location.href = `hs.html`;
+                });
             });
         });
 
