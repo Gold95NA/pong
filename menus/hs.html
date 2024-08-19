@@ -16,38 +16,41 @@
         <section class="blank"></section>
         <section id="content">
             <div id="menus">
-            <h2>HIGH SCORES</h2>
-            <!-- This is what your final html will look like
+                <h2>HIGH SCORES</h2>
+                <!-- This is what your final html will look like
                 <div id="high-scores">
                     //scores go here.
                 </div>
-            -->
+                -->
+                <div id="high-scores">
+                </div>
             </div>
         </section>
         <section class="blank"></section>
     </main>
     <script>
-        var highScoreList = [
-            {name:`aaa`, score:1000},
-            {name:`bbb`, score:980}
-        ]
-        
-        //
-        var menus = document.querySelector(`#menus`);
+        var highScoreList = 
+        [
+            {name: `Anthony`, score: 1000},
+            {name: `Levi`, score: 980}
+        ];
 
-        
-       
+        var highScoresDiv = document.getElementById('high-scores');
+        var message = "";
 
-     
+        for (let i = 0; i < highScoreList.length; i++) 
+        {
+            message += "<div class='high-score-item'>";
 
+            for (let key in highScoreList[i]) 
+            {
+                message += `<p>${key}: ${highScoreList[i][key]}</p>`;
+            }
 
-
-      
-        
-
-
-        
-
+            message += "</div>";
+        }
+        highScoresDiv.innerHTML = message;
     </script>
 </body>
 </html>
+        
