@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "pong",
+			"path": "."
+		},
+		{
+			"path": "../Simple Form Validation/SimpleFormValidation"
+		}
+	],
+	"settings": {}
+}
